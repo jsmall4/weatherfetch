@@ -10,6 +10,7 @@ const historyEl = document.getElementById("history");
 
 let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 let searchedCity = "";
+let cityName = "miami";
 
 // OpenWeather API Key:
 const APIkey = "60181c8fa5830514e6b036e19e7a5bae";
