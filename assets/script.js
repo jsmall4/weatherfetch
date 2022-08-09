@@ -1,72 +1,68 @@
-const inputEl = document.getElementById("cityInput");
-const searchEl = document.getElementById("search-button");
-const clearEl = document.getElementById("clear-history");
-const nameEl = document.getElementById("cityName");
-const weatherEl = document.getElementById("weather");
-const currentTempEl = document.getElementById("temperature");
-const currentHumidityEl = document.getElementById("humidity");
-const currentWindSpeedEl = document.getElementById("wind-speed");
-const currentUVIndexEl = document.getElementById("uv-index");
-const historyEl = document.getElementById("history");
+//Variable to store the searched city
+var city = "London";
+//Variables
+var searchCity = $("#search-city");
+var searchButton = $("#search-button");
+var clearButton = $("#clear-history");
+var currentCity = $("#current-city");
+var currentTemperature = $("#temperature");
+var currentHumidty = $("#humidity");
+var currentWindSpeed = $("#wind-speed");
+var currentUvindex = $("#uv-index");
+var selectedCity = [];
 
-let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
-let searchedCity = "";
-let cityName = "London";
+//API key
+var APIKey = "60181c8fa5830514e6b036e19e7a5bae";
+console.log(APIKey);
+// Display the curent and future weather
+function displayWeather(event) {
+  event.preventDefault();
+  if (searchCity.val().trim() !== "") {
+    city = searchCity.val().trim();
+    currentWeather(city);
+  }
+}
+function currentWeather(city) {
+  var queryURL =
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    city +
+    "&APPID=" +
+    APIKey;
+  $.ajax({
+    url: queryURL,
+    method: "GET",
+  }).then(function (response) {
+    console.log(response);
+    var weathericon = response.weather[0].icon;
+    var iconurl =
+      "https://openweathermap.org/img/wn/" + weathericon + "@2x.png";
+    var date = new Date(response.dt * 1000).toLocaleDateString();
 
-// OpenWeather API Key:
-const APIkey = "60181c8fa5830514e6b036e19e7a5bae";
-
-// called when user searches for city - get weather for city searched
-
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIkey}`;
-
-fetch(url).then((response) => {
-  console.log(response);
-  if (response.ok)
-    return response
-      .json()
-      .then((weather) => {
-        console.log(weather.main.temp);
-      })
-      .then(function (data) {
-        currentTempEl.textContent = "Temperature: " + "";
-      });
-});
-
-// __________________________________________________________________________
-// Tutor notes:
-// -----------------
-// const APIkey = "60181c8fa5830514e6b036e19e7a5bae";
-// const city = "New York";
-// const url =
-//   "https://api.openweathermap.org/data/2.5/weather?q=" +
-//   city +
-//   "&appid=" +
-//   APIkey;
-
-// const url2 = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}`;
-
-// fetch(url2).then((response) => {
-//   console.log(response);
-//   if (response.ok)
-//     return response.json().then((weather) => {
-//       console.log(weather);
-//       console.log(weather.coord.lon);
-//       console.log(weather.weather[0].icon);
-//       getWeather(weather.coord.lat, weather.coord.lon);
-//     });
-// });
-
-// function getWeather(lat, lon) {
-//   const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${APIkey}`;
-//   console.log(url);
-//   fetch(url).then((response) => {
-//     if (response.ok)
-//       return response.json().then((weather) => {
-//         console.log(weather);
-//         console.log(weather.daily[0].dt);
-//         const shortcut = weather.daily[0];
-//         console.log(shortcut.dt);
-//       });
-//   });
-// }
+    $(currentCity).html(
+      response.name + "(" + date + ")" + "<img src=" + iconurl + ">"
+    );
+    var temp = response.main.temp - 273.15;
+    $(currentHumidty).html(response.main.humidity + "%");
+    var ws = response.wind.speed;
+    var windsmph = (ws * 2.237).toFixed(1);
+    $(currentWindSpeed).html(windsmph + "MPH");
+    UVIndex(response.coord.lon, response.coord.lat);
+    forecast(response.id);
+    if (response.cod == 200) {
+      selectedCity = JSON.parse(localStorage.getItem("cityname"));
+      console.log(selectedCity);
+      if (selectedCity == null) {
+        selectedCity = [];
+        selectedCity.push(city);
+        localStorage.setItem("cityname", JSON.stringify(selectedCity));
+        addToList(city);
+      } else {
+        if (find(city) > 0) {
+          selectedCity.push(city);
+          localStorage.setItem("cityname", JSON.stringify(selectedCity));
+          addToList(city);
+        }
+      }
+    }
+  });
+}
