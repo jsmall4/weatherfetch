@@ -2,129 +2,115 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>WeatherFetch</title>
+    <!--Bootstrap CSS CDN-->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="./assets/style.css" />
-    <title>WeatherApp</title>
   </head>
   <body>
-    <!-- Nav Bar -->
-    <nav class="navbar navbar-dark bg-dark">
-      <span class="navbar-brand mb-0 h1 w-100 h-200 text-center"
-        >WeatherApp</span
-      >
-    </nav>
+    <h1
+      class="container-fluid text-center"
+      style="background-color: darkblue; color: white"
+    >
+      WeatherFetch
+    </h1>
 
-    <!-- App Container -->
-    <!-- Search for a city -->
-    <div class="container-md m-5">
+    <div class="container">
+      <!--Row for searching a city-->
       <div class="row">
-        <div class="col-md-3 bg-light">
-          <p class="search-bar my-2">City Search</p>
+        <div class="col-sm-4 bg-light">
+          <!--Here we create an HTML form for handling the inputs-->
+          <h4 class="pt-1">City Search:</h4>
+          <!--Here we create the text box for capturing the search city Name-->
           <div class="input-group mb-3">
             <input
-              id="cityInput"
               type="text"
               class="form-control"
-              placeholder="City Name"
-              aria-label="City Name"
+              id="search-city"
+              aria-label="City Search"
+              aria-describedby="search-button"
             />
             <div class="input-group-append">
-              <!-- Search Button -->
-              <button class="btn btn-primary" type="button" id="search-button">
-                <i class="fas fa-search"></i>
+              <button class="btn bg-primary text-light" id="search-button">
+                <i class="fa fa-search"></i>
               </button>
             </div>
           </div>
-          <!-- Clear History Button -->
-          <button class="btn btn-primary mb-3" type="button" id="clear-history">
-            Clear Search History
+          <!--section for search city history-->
+          <button class="btn btn-primary" type="button" id="clear-history">
+            Clear History
           </button>
-          <form id="history"></form>
+          <ul class="list-group"></ul>
         </div>
-        <!-- Display Local Weather -->
-        <div class="col-md-10 border border-dark m-3" id="weather">
-          <div class="col-md-12">
-            <p style="font-weight: bolder; font-size: 20px; padding-top: 10px">
-              Local Weather
-            </p>
-            <span
-              id="cityName"
-              class="cityName align-middle"
-              style="font-weight: bold"
-            ></span>
+        <div class="col-sm-8">
+          <div class="row ml-2 border border-dark rounded">
+            <div class="col-sm-12" id="current-weather">
+              <h3 class="city-name mb-1 mt-2 bolder" id="current-city"></h3>
+              <p>Temperature:<span class="current" id="temperature"></span></p>
+              <p>Humidity:<span class="current" id="humidity"></span></p>
+              <p>Wind Speed:<span class="current" id="wind-speed"></span></p>
+              <p>UV index:<span class="current" id="uv-index"></span></p>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p id="temperature"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p id="humidity"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p id="wind-speed"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p id="uv-index"></p>
+          <!--Row for future data-->
+          <div class="col-sm-12 mt-2" id="future-weather">
+            <h3>5 Day Forecast:</h3>
+            <div class="row text-light">
+              <div
+                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
+              >
+                <p id="forecastDate0"></p>
+                <p id="forecastImg0"></p>
+                <p>Temp:<span id="forecastTemp0"></span></p>
+                <p>Humidity:<span id="forecastHumidity0"></span></p>
+              </div>
+              <div
+                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
+              >
+                <p id="forecastDate1"></p>
+                <p id="forecastImg1"></p>
+                <p>Temp:<span id="forecastTemp1"></span></p>
+                <p>Humidity:<span id="forecastHumidity1"></span></p>
+              </div>
+              <div
+                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
+              >
+                <p id="forecastDate2"></p>
+                <p id="forecastImg2"></p>
+                <p>Temp:<span id="forecastTemp2"></span></p>
+                <p>Humidity:<span id="forecastHumidity2"></span></p>
+              </div>
+              <div
+                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
+              >
+                <p id="forecastDate3"></p>
+                <p id="forecastImg3"></p>
+                <p>Temp:<span id="forecastTemp3"></span></p>
+                <p>Humidity:<span id="forecastHumidity3"></span></p>
+              </div>
+              <div
+                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
+              >
+                <p id="forecastDate4"></p>
+                <p id="forecastImg4"></p>
+                <p>Temp:<span id="forecastTemp4"></span></p>
+                <p>Humidity:<span id="forecastHumidity4"></span></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5 Day Forecast  -->
-    <div class="row">
-      <div class="col-md-12">
-        <h2 class="mb-3 mt-1" style="font-size: 20px; border: solid">
-          5 Day Forecast
-        </h2>
-      </div>
-    </div>
-
-    <!-- Forecast for chosen city -->
-    <div class="row mx-2">
-      <div
-        class="col-md-2 forecast bg-primary text-white ml-1 mb-3 rounded"
-      ></div>
-      <div
-        class="col-md-2 forecast bg-primary text-white ml-1 mb-3 rounded"
-      ></div>
-      <div
-        class="col-md-2 forecast bg-primary text-white ml-1 mb-3 rounded"
-      ></div>
-      <div
-        class="col-md-2 forecast bg-primary text-white ml-1 mb-3 rounded"
-      ></div>
-      <div
-        class="col-md-2 forecast bg-primary text-white ml-1 mb-3 rounded"
-      ></div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script
-      src="https://kit.fontawesome.com/4c53ff95b1.js"
-      crossorigin="anonymous"
-    ></script>
+    <!--jQuery JS-->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3./js/bootstrap.bundle.min.js"></script>
+    <!--Code to Javscript File-->
     <script src="./assets/script.js"></script>
   </body>
 </html>

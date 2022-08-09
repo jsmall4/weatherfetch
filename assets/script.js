@@ -2,6 +2,7 @@ const inputEl = document.getElementById("cityInput");
 const searchEl = document.getElementById("search-button");
 const clearEl = document.getElementById("clear-history");
 const nameEl = document.getElementById("cityName");
+const weatherEl = document.getElementById("weather");
 const currentTempEl = document.getElementById("temperature");
 const currentHumidityEl = document.getElementById("humidity");
 const currentWindSpeedEl = document.getElementById("wind-speed");
@@ -10,7 +11,7 @@ const historyEl = document.getElementById("history");
 
 let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 let searchedCity = "";
-let cityName = "miami";
+let cityName = "London";
 
 // OpenWeather API Key:
 const APIkey = "60181c8fa5830514e6b036e19e7a5bae";
@@ -21,8 +22,20 @@ const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid
 
 fetch(url).then((response) => {
   console.log(response);
+  if (response.ok)
+    return response
+      .json()
+      .then((weather) => {
+        console.log(weather.main.temp);
+      })
+      .then(function (data) {
+        currentTempEl.textContent = "Temperature: " + "";
+      });
 });
 
+// __________________________________________________________________________
+// Tutor notes:
+// -----------------
 // const APIkey = "60181c8fa5830514e6b036e19e7a5bae";
 // const city = "New York";
 // const url =
