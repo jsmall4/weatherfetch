@@ -120,4 +120,12 @@ function addToList(x) {
   $(".list-group").append(listEl);
 }
 
+function callPastSearch(event) {
+  var liEl = event.target;
+  if (event.target.matches("li")) {
+    city = liEl.textContent.trim();
+    currentWeather(city);
+  }
+}
+
 $("#search-button").on("click", displayWeather);
