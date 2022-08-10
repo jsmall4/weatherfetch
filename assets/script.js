@@ -128,4 +128,36 @@ function callPastSearch(event) {
   }
 }
 
+function loadLastCity() {
+  $("ul").empty();
+  var selectedCity = JSON.parse(localStorage.getItem("cityname"));
+  if (selectedCity !== null) {
+    selectedCity = JSON.parse(localStorage.getItem("cityname"));
+    for (i = 0; i < selectedCity.length; i++) {
+      addToList(selectedCity[i]);
+    }
+    city = selectedCity[i - 1];
+    currentWeather(city);
+  }
+}
+
+function clearHistory(event) {
+  event.preventDefault();
+  selectedCity = [];
+  localStorage.removeItem("cityname");
+  document.location.reload();
+}
+
+function find(x) {
+  for (var i = 0; i < selectedCity.length; i++) {
+    if (x === selectedCity[i]) {
+      return -1;
+    }
+  }
+  return 1;
+}
+
 $("#search-button").on("click", displayWeather);
+$(document).on("click", callPastSearch);
+$(window).on("load", loadLastCity);
+$("#clear-history").on("click", clearHistory);
