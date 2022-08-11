@@ -42,6 +42,7 @@ function currentWeather(city) {
       response.name + "(" + date + ")" + "<img src=" + iconurl + ">"
     );
     var temp = response.main.temp - 273.15;
+    $(currentTemperature).html(temp.toFixed(2) + "°C");
     $(currentHumidty).html(response.main.humidity + "%");
     var ws = response.wind.speed;
     var windsmph = (ws * 2.237).toFixed(1);
