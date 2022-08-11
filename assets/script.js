@@ -22,6 +22,8 @@ function displayWeather(event) {
     currentWeather(city);
   }
 }
+
+// Function to call current weather in chosen city
 function currentWeather(city) {
   var queryURL =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -68,6 +70,7 @@ function currentWeather(city) {
   });
 }
 
+// function to call future weather in bottom display
 function forecast(cityid) {
   var dayover = false;
   var queryforcastURL =
@@ -97,8 +100,8 @@ function forecast(cityid) {
   });
 }
 
+// fucntion to call the UV index
 function UVIndex(ln, lt) {
-  //lets build the url for uvindex.
   var uvqURL =
     "https://api.openweathermap.org/data/2.5/uvi?appid=" +
     APIKey +
@@ -114,6 +117,7 @@ function UVIndex(ln, lt) {
   });
 }
 
+// local storage
 function addToList(x) {
   var listEl = $("<li>" + x + "</li>");
   $(listEl).attr("class", "list-group-item");
@@ -158,6 +162,8 @@ function find(x) {
   return 1;
 }
 
+
+// on click, do this
 $("#search-button").on("click", displayWeather);
 $(document).on("click", callPastSearch);
 $(window).on("load", loadLastCity);
